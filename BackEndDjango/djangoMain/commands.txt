@@ -1,2 +1,2 @@
-docker build --tag python-django .
-docker run --publish 8000:8000 python-django
+docker build --tag home-price-predictor .
+docker run --publish 8000:8000 home-price-predictor
