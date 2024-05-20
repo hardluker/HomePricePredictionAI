@@ -1,16 +1,29 @@
-import ListGroup from './components/ListGroup';
-
-let heading = 'Illinois Cities';
-const cities = ['Chicago', 'Aurora', 'Joliet', 'Naperville', 'Rockford'];
+import { useState } from 'react';
+import './App.css';
 
 function App() {
+  const [customer, setCustomer] = useState({
+    name: 'John',
+    address: {
+      city: 'San Francisco',
+      zipCode: 94111
+    }
+  });
+
+  const handleClick = () => {
+    const updatedCustomer = {
+      ...customer,
+      address: { ...customer.address, zipCode: 94112 }
+    };
+    setCustomer(updatedCustomer);
+    console.log(updatedCustomer);
+  };
+
   return (
     <div>
-      <ListGroup
-        onSelectItem={(item: string) => console.log(item)}
-        items={cities}
-        heading={heading}
-      ></ListGroup>
+      <button className="btn btn-primary" onClick={handleClick}>
+        Press Me
+      </button>
     </div>
   );
 }
