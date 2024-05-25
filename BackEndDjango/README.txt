@@ -30,7 +30,7 @@ example:
     "predicted_value": 277207.65625
 }
 
--POST http://127.0.0.1:8000/api/growth/
+-POST http://127.0.0.1:8000/api/median-growth/
 body:
 {
 	"date1": "2022-10-13",

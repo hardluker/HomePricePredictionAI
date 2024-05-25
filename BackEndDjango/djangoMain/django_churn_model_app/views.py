@@ -38,7 +38,7 @@ def predict_home_value(request):
 
 #POST Request for getting change estimations between dates    
 @api_view(['POST'])
-def predict_growth(request):
+def predict_growth_median(request):
     try:
         #Defining variables expected in JSON
         date_str1 = request.data.get('date1')
@@ -73,3 +73,53 @@ def predict_growth(request):
     #Handling an exception
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+@api_view(['POST'])
+def predict_growth_specific(request):
+    try:
+        #Define JSON expected variables from request
+        state_name = request.data.get('state')
+        start_price = request.data.get('startPrice')
+        start_date = request.data.get('startDate')
+        end_date = request.data.get('endDate')
+
+        #Handling missing data returning a bad request and error message.
+        if not state_name or not start_price or not start_date or not end_date:
+            return JsonResponse({'error': 'state, startPrice, startDate, endDate are required'}, status = status.HTTP_400_BAD_REQUEST)
+        
+        #Defining predictions for calculations
+        prediction1 = float(model_manager.make_prediction(start_date, state_name))
+        prediction2 = float(model_manager.make_prediction(end_date, state_name))
+
+        #Calculating changes between predictions
+        percent_change = (((prediction2 - prediction1) / prediction1) * 100)
+
+        #Calculating the projected price
+        projected_price = (start_price + (start_price * (percent_change / 100)))
+
+        return JsonResponse(
+            {
+                'state': state_name,
+                'startPrice': start_price,
+                'projectedPrice': projected_price,
+                'startDate': start_date,
+                'endDate': end_date,
+                'percentChange': percent_change
+            }
+        )
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+
+@api_view(['GET'])
+def get_states_list(request):
+    try:
+        states = model_manager.get_states()
+        return Response({'states': states}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+    

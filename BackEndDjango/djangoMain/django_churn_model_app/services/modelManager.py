@@ -128,3 +128,19 @@ class ModelManager:
             raise FileNotFoundError(f"Model or scaler not found for state: {state_name}")
         except Exception as e:
             raise Exception(f"Error making prediction for {state_name}: {e}")
+
+    def get_states(self):
+        # Return a sorted list of unique states from all CSV files.
+        all_states = set()
+        
+        for csv_file in self.csv_files:
+            try:
+                data = self.load_data(os.path.join(self.data_path, csv_file))
+                states = data.columns[1:-1]  # Exclude 'Date' and 'Days_Since_Reference'
+                all_states.update(states)
+            except Exception as e:
+                print(f"Error loading states from {csv_file}: {e}")
+        
+        return sorted(all_states)
+    
+
