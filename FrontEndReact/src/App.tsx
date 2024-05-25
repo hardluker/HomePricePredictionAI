@@ -56,8 +56,10 @@ function App() {
       {!submitted && (
         <PriceGrowthForm onSubmit={handleSubmit} states={states} />
       )}
-      {error && <p className="text-danger">{error}</p>}
-      {isLoading && <div className="spinner-border"></div>}
+      <div className="status mt-3">
+        {error && <p className="text-danger">{error}</p>}
+        {isLoading && <div className="spinner-border"></div>}
+      </div>
 
       {response &&
         submitted && ( // Render response data if available
