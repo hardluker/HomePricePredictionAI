@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -55,7 +56,18 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://localhost:80",
+    "http://localhost",
+    'http://18.224.179.155',
+    'http://18.224.179.155:80',
+    'http://18.224.179.155:443',
+    'http://172.17.0.2',
+
+
+
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True  # Added for troubleshooting
 
 ROOT_URLCONF = 'django_churn_model.urls'
 
