@@ -1,5 +1,5 @@
-# Stage 1: Build the application
-FROM node:20-alpine AS builder
+# Use an official Node.js runtime as a parent image
+FROM node:20-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -13,21 +13,8 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
-# Build the application for production
-RUN npm run build
-
-# Stage 2: Serve the application using Nginx
-FROM nginx:alpine
-
-# Copy the built files from the previous stage
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Copy your custom Nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Expose port 80 and 443
-EXPOSE 80
-EXPOSE 443
+# Expose the port the app runs on
+EXPOSE 5173
 
 # Command to run the application
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "run", "dev"]

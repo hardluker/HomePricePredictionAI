@@ -15,7 +15,7 @@ function App() {
     const controller = new AbortController();
     setLoading(true);
     axios
-      .get<{ states: string[] }>('http://127.0.0.1:8000/api/get-states/', {
+      .get<{ states: string[] }>('http://18.224.179.155:8000/api/get-states/', {
         signal: controller.signal
       })
       .then((response) => {
@@ -34,7 +34,7 @@ function App() {
     setLoading(true);
     try {
       const response = await axios.post(
-        'http://127.0.0.1:8000/api/specific-growth/',
+        'http://18.224.179.155:8000/api/specific-growth/',
         data
       );
       setResponse(response.data); // Store the response data in state
