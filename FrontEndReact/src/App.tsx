@@ -16,7 +16,7 @@ function App() {
     setLoading(true);
     axios
       .get<{ states: string[] }>(
-        'https://aihomepredictor.com//api/get-states/',
+        'https://aihomepredictor.com/api/get-states/',
         {
           signal: controller.signal
         }
@@ -37,7 +37,7 @@ function App() {
     setLoading(true);
     try {
       const response = await axios.post(
-        'https://aihomepredictor.com/api/get-states//api/specific-growth/',
+        'https://aihomepredictor.com/api/specific-growth/',
         data
       );
       setResponse(response.data); // Store the response data in state
