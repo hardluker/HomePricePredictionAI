@@ -15,9 +15,12 @@ function App() {
     const controller = new AbortController();
     setLoading(true);
     axios
-      .get<{ states: string[] }>('http://18.224.179.155:8000/api/get-states/', {
-        signal: controller.signal
-      })
+      .get<{ states: string[] }>(
+        'https://aihomepredictor.com//api/get-states/',
+        {
+          signal: controller.signal
+        }
+      )
       .then((response) => {
         setStates(response.data.states);
         setLoading(false);
@@ -34,7 +37,7 @@ function App() {
     setLoading(true);
     try {
       const response = await axios.post(
-        'http://18.224.179.155:8000/api/specific-growth/',
+        'https://aihomepredictor.com/api/get-states//api/specific-growth/',
         data
       );
       setResponse(response.data); // Store the response data in state
